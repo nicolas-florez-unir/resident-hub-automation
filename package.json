@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "create-new-client": "bun run src/application/scripts/create-new-client.ts"
+    "create-new-client": "bun run src/application/scripts/create-new-client.script.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"
