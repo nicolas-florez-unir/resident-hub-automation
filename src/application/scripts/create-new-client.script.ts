@@ -24,6 +24,7 @@ import { axiosHttpClient } from "../../infrastructure/http/clients/axios-http.cl
         headers: error.response?.headers,
         message: error.message,
         name: error.name,
+        request: error.request?.data
       });
     } else {
       console.log("Unknown error:", error);
