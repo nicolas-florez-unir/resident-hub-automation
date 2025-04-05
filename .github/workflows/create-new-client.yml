@@ -17,7 +17,7 @@ on:
         description: "Nombre del administrador"
         required: true
       administrator_last_name:
-        description: "Nombre del administrador"
+        description: "Apellido del administrador"
         required: true
       administrator_email:
         description: "Email del administrador"
