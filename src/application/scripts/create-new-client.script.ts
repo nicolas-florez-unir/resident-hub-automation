@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { axiosHttpClient } from "../../infrastructure/http/clients/axios-http.client";
 
 (async () => {
@@ -15,7 +16,18 @@ import { axiosHttpClient } from "../../infrastructure/http/clients/axios-http.cl
 
     console.log("Client created successfully");
   } catch (error) {
-    console.error("Error creating client:", error);
+    if(error instanceof AxiosError) {
+      console.error("Error creating client:", {
+        status: error.response?.status,
+        data: error.response?.data,
+        statusText: error.response?.statusText,
+        headers: error.response?.headers,
+        message: error.message,
+        name: error.name,
+      });
+    } else {
+      console.log("Unknown error:", error);
+    }
     process.exit(1);
   }
 })();
