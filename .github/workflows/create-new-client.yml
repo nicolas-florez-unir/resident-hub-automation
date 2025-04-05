@@ -1,0 +1,48 @@
+name: Create New Client
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        type: choice
+        description: Environment to deploy
+        default: staging
+        options:
+          - production
+          - staging
+      condominium_name:
+        description: "Nombre del condominio"
+        required: true
+      administrator_first_name:
+        description: "Nombre del administrador"
+        required: true
+      administrator_last_name:
+        description: "Nombre del administrador"
+        required: true
+      administrator_email:
+        description: "Email del administrador"
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.env }}
+
+    steps:
+      - name: Checkout repository
+        - uses: actions/checkout@v4
+        - uses: oven-sh/setup-bun@v2
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "PRIVATE_API_SECRET=${{ secrets.PRIVATE_API_SECRET }}" >> .env
+          echo "PRIVATE_API_URL=${{ secrets.PRIVATE_API_URL }}" >> .env
+          echo "CONDOMINIUM_NAME=${{ github.event.inputs.condominium_name }}" >> .env
+          echo "ADMINISTRATOR_FIRST_NAME=${{ github.event.inputs.administrator_first_name }}" >> .env
+          echo "ADMINISTRATOR_LAST_NAME=${{ github.event.inputs.administrator_last_name }}" >> .env
+          echo "ADMINISTRATOR_LAST_NAME=${{ github.event.inputs.administrator_email }}" >> .env
+          cat .env
+
+      - name: Execute script
+        run: bun run create-new-client
